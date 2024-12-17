@@ -3,6 +3,7 @@ package com.neoxiontechnologies.neoxAccounting.entities;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,14 +34,36 @@ public class BillEntity extends AbstractAuditingEntity {
 	private CustomerEntity customerEntity;
 	private String internalLocationToProof;
 	@Lob
+	@Column(length = 1948576,columnDefinition = "OID")
 	private byte[] proofBlob;
 	private String proofBlobFileName;
 	private String comment;
 	@Enumerated(EnumType.STRING)
 	private ModeOfPayment modeOfPayment;
+	@Column(precision = 30, scale = 3)
 	private BigDecimal amount;
+	@Column(precision = 30, scale = 3)
+	private BigDecimal vatAmount=new BigDecimal(0D);
 	private String locationToProofUrl;
+	@Column(length = 4000)
+	private String billId;
 	
+	public String getBillId() {
+		return billId;
+	}
+
+	public void setBillId(String billId) {
+		this.billId = billId;
+	}
+
+	public BigDecimal getVatAmount() {
+		return vatAmount;
+	}
+
+	public void setVatAmount(BigDecimal vatAmount) {
+		this.vatAmount = vatAmount;
+	}
+
 	public String getLocationToProofUrl() {
 		return locationToProofUrl;
 	}

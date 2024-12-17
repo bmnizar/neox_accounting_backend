@@ -30,10 +30,12 @@ public class BillMappingUtility {
 		String currencyCode = currencyDTO.getCode();
 		Optional<CurrencyEntity> findById = currencyDao.findByCode(currencyCode);
 		billEntity.setCurrencyEntity(findById.get());
+		billEntity.setVatAmount(billDTO.getVatAmount());
 		billEntity.setInternalLocationToProof(billDTO.getInternalLocationToProof());
 		billEntity.setProofBlob(billDTO.getProofBlob());
 		billEntity.setProofBlobFileName(billDTO.getProofBlobFileName());
 		billEntity.setLocationToProofUrl(billDTO.getLocationToProofUrl());
+		billEntity.setBillId(billDTO.getBillId());
 		billEntity.setDateOfBill(billDTO.getDateOfBill());
 		billEntity.setModeOfPayment(ModeOfPayment.valueOf(billDTO.getModeOfPayment()));
 		return billEntity;
@@ -51,6 +53,8 @@ public class BillMappingUtility {
 		BillDTO billDTO = new BillDTO();
 		billDTO.setComment(billEntity.getComment());
 		billDTO.setId(billEntity.getId());
+		billDTO.setBillId(billEntity.getBillId());
+		billDTO.setVatAmount(billEntity.getVatAmount());
 		billDTO.setCurrencyDTO(CurrencyMappingUtility.convertCurrencyEntityToDto(billEntity.getCurrencyEntity()));
 		billDTO.setLocationToProofUrl(billEntity.getLocationToProofUrl());
 		billDTO.setCustomerDTO(CustomerMappingUtility.convertCustomerEntityToDTO(billEntity.getCustomerEntity()));

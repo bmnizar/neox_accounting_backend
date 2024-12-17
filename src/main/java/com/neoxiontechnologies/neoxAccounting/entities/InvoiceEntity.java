@@ -39,9 +39,21 @@ public class InvoiceEntity extends AbstractAuditingEntity {
 	private String locationToProofUrl;
 	private String comment;
 	private String internalLocationToProof;
+	@Column(precision = 30, scale = 3)
+	private BigDecimal totalVatAmount=new BigDecimal(0D);
+	
+	@Column(precision = 30, scale = 3)
 	private BigDecimal totalAmount;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private CurrencyEntity currency;
+
+	public BigDecimal getTotalVatAmount() {
+		return totalVatAmount;
+	}
+
+	public void setTotalVatAmount(BigDecimal totalVatAmount) {
+		this.totalVatAmount = totalVatAmount;
+	}
 
 	public String getComment() {
 		return comment;

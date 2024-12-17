@@ -27,6 +27,7 @@ public class InvoiceMappingUtility {
 		Optional<CurrencyEntity> findById = currencyDao.findByCode(currencyCode);
 		invoiceEntity.setCurrency(findById.get()); 
 		invoiceEntity.setTotalAmount(invoiceDTO.getTotalAmount());
+		invoiceEntity.setTotalVatAmount(invoiceDTO.getTotalVatAmount());
 		invoiceEntity.setInvoiceId(invoiceDTO.getInvoiceId());
 		invoiceEntity.setInternalLocationToProof(invoiceDTO.getInternalLocationToProof());
 		invoiceEntity.setProofBlob(invoiceDTO.getProofBlob());
@@ -68,6 +69,7 @@ public class InvoiceMappingUtility {
 
 	public static InvoiceDTO convertInvoiceEntityToDto(InvoiceEntity invoiceEntity) {
 		InvoiceDTO invoiceDTO = new InvoiceDTO();
+		invoiceDTO.setTotalVatAmount(invoiceEntity.getTotalVatAmount());
 		invoiceDTO.setId(invoiceEntity.getId());  
 		invoiceDTO.setComment(invoiceEntity.getComment());
 		invoiceDTO.setDateOfInvoice(invoiceEntity.getDateOfInvoice());

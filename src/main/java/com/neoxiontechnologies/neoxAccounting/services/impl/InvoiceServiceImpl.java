@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,8 +42,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public List<InvoiceDTO> listInvoices() {
-		List<InvoiceEntity> findAll = invoiceDao.findAll();
+	public List<InvoiceDTO> listInvoices() {  
+		List<InvoiceEntity> findAll = invoiceDao.findAll(Sort.by("dateOfInvoice").descending());
 		return InvoiceMappingUtility.convertListOfInvoiceEntityToDto(findAll);
 	}
 

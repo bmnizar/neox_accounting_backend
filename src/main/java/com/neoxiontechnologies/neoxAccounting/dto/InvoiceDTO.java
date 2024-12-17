@@ -23,7 +23,16 @@ public class InvoiceDTO {
 	private String comment;
 	private CurrencyDTO currencyDTO;
 	private String internalLocationToProof;
+	private BigDecimal totalVatAmount;
 	
+	public BigDecimal getTotalVatAmount() {
+		return totalVatAmount;
+	}
+
+	public void setTotalVatAmount(BigDecimal totalVatAmount) {
+		this.totalVatAmount = totalVatAmount;
+	}
+
 	public String getComment() {
 		return comment;
 	}

@@ -4,10 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.neoxiontechnologies.neoxAccounting.dao.WithdrawalDao;
 import com.neoxiontechnologies.neoxAccounting.dto.WithdrawalDto;
+import com.neoxiontechnologies.neoxAccounting.entities.WithdrawalEntity;
 import com.neoxiontechnologies.neoxAccounting.services.WithdrawalService;
+import com.neoxiontechnologies.neoxAccounting.utils.WithdrawalMappingUtility;
 
 @Service
 public class WithdrawalServiceImpl implements WithdrawalService {
@@ -16,14 +20,15 @@ public class WithdrawalServiceImpl implements WithdrawalService {
 
 	@Override
 	public List<WithdrawalDto> getListOfWithdrawal() {
-		// TODO Auto-generated method stub
-		return null;
+		List<WithdrawalEntity> findAll = withdrawalDao.findAll();
+		return WithdrawalMappingUtility.convertListWithdrawalEntityToDto(findAll);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public void createWithdrawal(WithdrawalDto withdrawalDto) {
-		// TODO Auto-generated method stub
-
+		WithdrawalEntity withdrawalEntity = WithdrawalMappingUtility.convertWithdrawalDtoToEntity(withdrawalDto);
+		withdrawalDao.save(withdrawalEntity);
 	}
 
 }

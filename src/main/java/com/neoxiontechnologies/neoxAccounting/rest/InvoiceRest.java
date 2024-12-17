@@ -49,7 +49,16 @@ public class InvoiceRest {
 	public void downloadProof(@PathVariable String invoiceId, HttpServletResponse response) throws IOException {
 		Object downloadProof = invoiceService.downloadProof(invoiceId);
 		FileInputStream fileInputStream = new FileInputStream(new File(downloadProof.toString()));
-		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+		String extention = downloadProof.toString().substring(downloadProof.toString().length() - 3);
+
+		switch (extention) {  
+		case "pdf":
+			response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+			break;
+		default:
+			response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+			break;
+		}
 		IOUtils.copy(fileInputStream, response.getOutputStream());
 
 	}
@@ -63,6 +72,7 @@ public class InvoiceRest {
 		String fileNameString = fileToUpload.getOriginalFilename();
 		byte[] bytes = fileToUpload.getBytes();
 		Calendar instance = Calendar.getInstance();
+		instance.setTime(invoiceDTO.getDateOfInvoice());
 		int month = instance.get(Calendar.MONTH) + 1;
 		String yearMonth = instance.get(Calendar.YEAR) + "-" + month;
 		String fileFullPath1 = filesystemRoot + File.separatorChar + "Invoices" + File.separatorChar + yearMonth;
@@ -85,7 +95,7 @@ public class InvoiceRest {
 		String port = env.getProperty("server.port");
 		String locationToProofUrl = ipAddress + ":" + port + "/" + NeoxAccountingUtils.FILE_STORE_REST_NAME + "/"
 				+ "Invoices" + File.separatorChar + yearMonth + File.separatorChar + fileNameString;
-		invoiceDTO.setLocationToProofUrl(locationToProofUrl); 
+		invoiceDTO.setLocationToProofUrl(locationToProofUrl);
 
 		invoiceService.createInvoice(invoiceDTO);
 		return new ResponseEntity<String>(HttpStatus.OK);

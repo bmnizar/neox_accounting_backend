@@ -31,7 +31,25 @@ public class BillDTO {
 	private byte[] proofBlob;
 	private String proofBlobFileName;
 	private String locationToProofUrl;
+	private BigDecimal vatAmount;
+	private String billId;
 	
+	public String getBillId() {
+		return billId;
+	}
+
+	public void setBillId(String billId) {
+		this.billId = billId;
+	}
+
+	public BigDecimal getVatAmount() {
+		return vatAmount;
+	}
+
+	public void setVatAmount(BigDecimal vatAmount) {
+		this.vatAmount = vatAmount;
+	}
+
 	public String getLocationToProofUrl() {
 		return locationToProofUrl;
 	}
